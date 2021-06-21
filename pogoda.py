@@ -1,9 +1,12 @@
 import requests
 import datetime
 import pprint
-#'http://api.weatherapi.com/v1/current.json?key=0e7e4398f1164df2827105246212106&q=Amsterdam&aqi=no'
+
+# My API:
+# 'http://api.weatherapi.com/v1/current.json?key=0e7e4398f1164df2827105246212106&q=Amsterdam&aqi=no'
 
 information = []
+show_info = []
 
 class Weather:
     def __init__(self, location, temp_c, localtime):
@@ -26,15 +29,16 @@ data = GetData('http://api.weatherapi.com/v1/current.json?key=0e7e4398f1164df282
 
 for entry in data.data.items():
         information.append(entry)
-
-
 for word in information[0]:
     if 'name' in word:
-        print(word['name'])
+        w_n = word['name']
+        show_info.append(w_n)
     if 'localtime' in word:
-        print(word['localtime'])
+        w_l = word['localtime']
+        show_info.append(w_l)
 for word_two in information[1]:
     if 'temp_c' in word_two:
-        print(word_two['temp_c'])
+        w_t_t = word_two['temp_c']
+        show_info.append(w_t_t)
     # weather = Weather(entry['location'], entry['temp_c'], entry['localtime'])
-    # information.append(weather)
+print(show_info)
