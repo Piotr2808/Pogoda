@@ -3,6 +3,15 @@ import datetime
 import pprint
 #'http://api.weatherapi.com/v1/current.json?key=0e7e4398f1164df2827105246212106&q=Amsterdam&aqi=no'
 
+information = []
+
+class Weather:
+    def __init__(self, location, temp_c, localtime):
+        self.location = location
+        self.temp_c = temp_c
+        self.time = localtime
+
+
 class GetData:
     def __init__(self, url):
         self.url = url
@@ -13,4 +22,19 @@ class GetData:
         return r.json()
 
 data = GetData('http://api.weatherapi.com/v1/current.json?key=0e7e4398f1164df2827105246212106&q=Amsterdam&aqi=no')
-data.get_data()
+# pprint.pprint(data.data)
+
+for entry in data.data.items():
+        information.append(entry)
+
+
+for word in information[0]:
+    if 'name' in word:
+        print(word['name'])
+    if 'localtime' in word:
+        print(word['localtime'])
+for word_two in information[1]:
+    if 'temp_c' in word_two:
+        print(word_two['temp_c'])
+    # weather = Weather(entry['location'], entry['temp_c'], entry['localtime'])
+    # information.append(weather)
