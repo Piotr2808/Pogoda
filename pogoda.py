@@ -1,9 +1,15 @@
+# importy
+
 import requests
 import datetime
 import pprint
 
+# listy
+
 information = []
 show_info = []
+
+# klasy
 
 class Weather:
     def __init__(self, name, temp_c, rain):
@@ -11,7 +17,7 @@ class Weather:
         self.temp_c = temp_c
         self.rain = rain
     def __str__(self):
-        return f'Miasto: {self.name},Temperatura: {self.temp_c}, Deszcz: {self.rain}'
+        return f'Miasto: {self.name},Temperatura: {self.temp_c},Deszcz: {self.rain}'
 
     def write_txt(self):
         with open("Weather.txt", "w") as file:
@@ -33,9 +39,15 @@ class GetData:
         r = requests.get(self.url, params=params)
         return r.json()
 
+# dane
+
 city = input("City: ")
 date = input("Data: (yyyy-mm-dd): ")
 data = GetData('http://api.weatherapi.com/v1/current.json?key=0e7e4398f1164df2827105246212106', city, date)
+
+# Fory i inne mieszanki
+
+czytacz = open("Weather.txt", "r")
 
 for entry in data.data.items():
         information.append(entry)
@@ -47,11 +59,9 @@ for word_two in information[1]:
     if 'temp_c' in word_two:
         w_t_t = word_two['temp_c']
         show_info.append(w_t_t)
-        pprint.pprint(information)
-        print(show_info)
 for word_three in information[1]:
     if 'precip_mm' in word_three:
-        if word_three['precip_mm'] == '0.0':
+        if float(word_three['precip_mm']) == 0.0:
             warun_1 = "Nie będzie padać"
             show_info.append(warun_1)
         if float(word_three['precip_mm']) > 0.0 and float(word_three['precip_mm']) < 0.9:
@@ -61,6 +71,11 @@ for word_three in information[1]:
             warun_3 = "Będzie padać"
             show_info.append(warun_3)
 
+# dalsze dane
+
 weather = Weather(show_info[0], show_info[1], show_info[2])
 print(weather)
+
+# zapis do txt
+
 weather.write_txt()
